@@ -6,6 +6,7 @@ const {
 } = require('apollo-server-express');
 const {
   MONGODB,
+  SECRET_KEY,
   TWITTER_CONSUMER_KEY,
   TWITTER_SECRET,
   GITHUB_CONSUMER_KEY,
@@ -22,14 +23,14 @@ const SocialUser = require('./models/SocialUser');
 
 const PORT = 4000;
 const app = express();
-const path = '/graphql';
+
 // MIDDLEWARE
 app.use(express.json());
 app.use('*', cors({ origin: 'http://localhost:3000', credentials: true }));
 
 app.use(
   session({
-    secret: 'maxiboy',
+    secret: SECRET_KEY,
     resave: true,
     saveUninitialized: true,
   }),
@@ -176,6 +177,7 @@ const server = new ApolloServer({
     }
   },
 });
+
 server.applyMiddleware({
   app,
   cors: { origin: 'http://localhost:3000', credentials: true },
