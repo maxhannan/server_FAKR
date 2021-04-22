@@ -1,20 +1,24 @@
 const express = require('express');
-const { ApolloServer, AuthenticationError } = require('apollo-server-express');
-const typeDefs = require('./gql/typeDef');
-const resolvers = require('./gql/resolvers/resolvers');
-const { MONGODB, SECRET_KEY } = require('./config');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session');
 const passport = require('./passport/passport');
 const AuthRoutes = require('./passport/AuthRoutes');
+const { ApolloServer, AuthenticationError } = require('apollo-server-express');
+
+const typeDefs = require('./gql/typeDef');
+const resolvers = require('./gql/resolvers/resolvers');
+const { MONGODB, SECRET_KEY } = require('./config');
 
 const PORT = 4000;
 const app = express();
-
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true,
+};
 // MIDDLEWARE
 app.use(express.json());
-app.use('*', cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors(corsOptions));
 
 app.use(
   session({
@@ -45,10 +49,7 @@ const server = new ApolloServer({
   },
 });
 
-server.applyMiddleware({
-  app,
-  cors: { origin: 'http://localhost:3000', credentials: true },
-});
+server.applyMiddleware({ app, cors: corsOptions });
 
 const startServer = async () => {
   await mongoose.connect(MONGODB, {
