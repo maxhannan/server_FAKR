@@ -17,6 +17,8 @@
     "graphql": "^15.5.0",
     "mongoose": "^5.12.5",
     "passport": "^0.4.1",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-github": "^1.1.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-twitter": "^1.0.4"
   }
 }
