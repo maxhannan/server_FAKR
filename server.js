@@ -7,7 +7,7 @@ const AuthRoutes = require('./passport/AuthRoutes');
 const { ApolloServer, AuthenticationError } = require('apollo-server-express');
 
 const typeDefs = require('./gql/typeDef');
-const resolvers = require('./gql/resolvers/resolvers');
+const resolvers = require('./gql/resolvers/');
 const { MONGODB, SECRET_KEY } = require('./config');
 
 const PORT = 4000;

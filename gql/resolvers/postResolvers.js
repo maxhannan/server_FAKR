@@ -1,11 +1,8 @@
-const { AuthenticationError } = require('apollo-server-errors');
+const { AuthenticationError, UserInputError } = require('apollo-server-errors');
 const Post = require('../../models/Post');
 
 module.exports = {
   Query: {
-    getCurrentUser: async (_, args, context) => {
-      return context.user;
-    },
     async getPosts() {
       try {
         const posts = await Post.find().sort({ createdAt: -1 });

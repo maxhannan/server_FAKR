@@ -10,6 +10,13 @@ const postSchema = new Schema({
       createdAt: String,
     },
   ],
+  comments: [
+    {
+      body: String,
+      username: String,
+      createdAt: String,
+    },
+  ],
   user: {
     type: Schema.Types.ObjectId,
     ref: 'socialusers',
