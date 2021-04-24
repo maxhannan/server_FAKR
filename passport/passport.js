@@ -1,7 +1,13 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-console */
+/* eslint-disable no-underscore-dangle */
 const passport = require('passport');
 const TwitterStrategy = require('passport-twitter');
 const GitHubStrategy = require('passport-github');
-const SocialUser = require('../models/SocialUser');
+const bcrypt = require('bcryptjs');
+const PassportLocal = require('passport-local').Strategy;
+
+const User = require('../models/User');
 const {
   TWITTER_CONSUMER_KEY,
   TWITTER_SECRET,
@@ -9,17 +15,29 @@ const {
   GITHUB_SECRET,
 } = require('../config');
 
-passport.serializeUser((user, done) => {
-  return done(null, user._id);
-});
+passport.serializeUser((user, done) => done(null, user._id));
 
 passport.deserializeUser((id, done) => {
-  SocialUser.findById(id, (err, doc) => {
-    return done(null, doc);
-  });
+  User.findById(id, (err, doc) => done(null, doc));
 });
 
 // PASSPORT STRATEGIES
+passport.use(
+  new PassportLocal((username, password, done) => {
+    User.findOne({ username }, (err, user) => {
+      if (err) throw err;
+      if (!user) return done(null, false);
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (err) throw err;
+        if (result === true) {
+          return done(null, user);
+        }
+        return done(null, false);
+      });
+    });
+  }),
+);
+
 passport.use(
   new TwitterStrategy(
     {
@@ -27,14 +45,14 @@ passport.use(
       consumerSecret: TWITTER_SECRET,
       callbackURL: 'http://localhost:4000/auth/twitter/callback',
     },
-    function (accessToken, refreshToken, profile, cb) {
+    (accessToken, refreshToken, profile, cb) => {
       console.log(profile);
-      SocialUser.findOne({ twitterID: profile.id }, async (err, doc) => {
+      User.findOne({ twitterID: profile.id }, async (err, doc) => {
         if (err) {
           return cb(err, null);
         }
         if (!doc) {
-          const newUser = new SocialUser({
+          const newUser = new User({
             twitterID: profile.id,
             username: profile.username,
             displayName: profile.displayName,
@@ -43,7 +61,7 @@ passport.use(
           await newUser.save();
           return cb(null, newUser);
         }
-        cb(null, doc);
+        return cb(null, doc);
       });
     },
   ),
@@ -56,14 +74,14 @@ passport.use(
       clientSecret: GITHUB_SECRET,
       callbackURL: 'http://localhost:4000/auth/github/callback',
     },
-    function (accessToken, refreshToken, profile, cb) {
+    (accessToken, refreshToken, profile, cb) => {
       console.log(profile);
-      SocialUser.findOne({ githubID: profile.id }, async (err, doc) => {
+      User.findOne({ githubID: profile.id }, async (err, doc) => {
         if (err) {
           return cb(err, null);
         }
         if (!doc) {
-          const newUser = new SocialUser({
+          const newUser = new User({
             githubID: profile.id,
             username: profile.username,
             displayName: profile.displayName,
@@ -72,7 +90,7 @@ passport.use(
           await newUser.save();
           return cb(null, newUser);
         }
-        cb(null, doc);
+        return cb(null, doc);
       });
     },
   ),

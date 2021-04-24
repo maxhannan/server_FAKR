@@ -1,13 +1,15 @@
+/* eslint-disable no-console */
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session');
-const passport = require('./passport/passport');
-const AuthRoutes = require('./passport/AuthRoutes');
 const { ApolloServer, AuthenticationError } = require('apollo-server-express');
+const cookieParser = require('cookie-parser');
 
+const AuthRoutes = require('./passport/AuthRoutes');
+const passport = require('./passport/passport');
 const typeDefs = require('./gql/typeDef');
-const resolvers = require('./gql/resolvers/');
+const resolvers = require('./gql/resolvers');
 const { MONGODB, SECRET_KEY } = require('./config');
 
 const PORT = 4000;
@@ -18,6 +20,8 @@ const corsOptions = {
 };
 // MIDDLEWARE
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser(SECRET_KEY));
 app.use(cors(corsOptions));
 
 app.use(

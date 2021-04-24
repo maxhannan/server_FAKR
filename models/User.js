@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const socialUserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   githubID: {
     required: false,
     type: String,
@@ -21,6 +21,10 @@ const socialUserSchema = new mongoose.Schema({
     required: false,
     type: String,
   },
+  password: {
+    required: false,
+    type: String,
+  },
 });
 
-module.exports = mongoose.model('socialUser', socialUserSchema);
+module.exports = mongoose.model('User', UserSchema);

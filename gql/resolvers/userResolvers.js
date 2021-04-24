@@ -1,7 +1,5 @@
 module.exports = {
   Query: {
-    getCurrentUser: async (_, args, context) => {
-      return context.user;
-    },
+    getCurrentUser: async (_, args, context) => context.user,
   },
 };

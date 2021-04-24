@@ -19,7 +19,7 @@ const postSchema = new Schema({
   ],
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'socialusers',
+    ref: 'users',
   },
 });
 

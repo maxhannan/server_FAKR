@@ -11,14 +11,24 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-server-errors": "^2.5.0",
     "apollo-server-express": "^2.23.0",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "express": "^4.17.1",
     "express-session": "^1.17.1",
     "graphql": "^15.5.0",
     "mongoose": "^5.12.5",
     "passport": "^0.4.1",
     "passport-github": "^1.1.0",
     "passport-google-oauth20": "^2.0.0",
+    "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4"
+  },
+  "devDependencies": {
+    "eslint": "^7.24.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
   }
 }
