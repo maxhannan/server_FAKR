@@ -5,6 +5,7 @@ const cors = require('cors');
 const session = require('express-session');
 const { ApolloServer, AuthenticationError } = require('apollo-server-express');
 const cookieParser = require('cookie-parser');
+const generateUploadURL = require('./s3.js');
 
 const AuthRoutes = require('./passport/AuthRoutes');
 const passport = require('./passport/passport');
@@ -36,6 +37,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth/', AuthRoutes);
+
+app.get('/s3Url', async (req, res) => {
+  const url = await generateUploadURL();
+  res.send({ url });
+});
 
 // APOLLO SERVER
 const server = new ApolloServer({

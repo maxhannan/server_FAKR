@@ -24,6 +24,7 @@ passport.deserializeUser((id, done) => {
 // PASSPORT STRATEGIES
 passport.use(
   new PassportLocal((username, password, done) => {
+    // eslint-disable-next-line
     User.findOne({ username }, (err, user) => {
       if (err) throw err;
       if (!user) return done(null, false);
