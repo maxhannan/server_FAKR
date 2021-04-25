@@ -25,7 +25,7 @@ module.exports = {
   },
   Mutation: {
     async createPost(_, { body }, context) {
-      const user = context.user;
+      const { user } = context;
 
       if (body.trim() === '') {
         throw new Error('Post body must not be empty');
@@ -35,6 +35,7 @@ module.exports = {
         body,
         user: user.id,
         username: user.username,
+        userPhoto: user.photos,
         createdAt: new Date().toISOString(),
       });
 
@@ -43,7 +44,7 @@ module.exports = {
       return post;
     },
     async deletePost(_, { postId }, context) {
-      const user = context.user;
+      const { user } = context;
       try {
         const post = await Post.findById(postId);
         if (user.username === post.username) {
@@ -73,7 +74,8 @@ module.exports = {
 
         await post.save();
         return post;
-      } else throw new UserInputError('Post not found');
+      }
+      throw new UserInputError('Post not found');
     },
   },
 };
