@@ -11,7 +11,8 @@ module.exports = gql`
     photoURL: String!
     createdAt: String!
     username: String!
-    userPhoto: String
+    userDisplayName: String!
+    userPhoto: String!
     likes: [Like]!
     likeCount: Int!
     comments: [Comment]!

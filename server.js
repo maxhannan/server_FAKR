@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 const { ApolloServer, AuthenticationError } = require('apollo-server-express');
 const cookieParser = require('cookie-parser');
 const generateUploadURL = require('./s3.js');
@@ -15,6 +16,7 @@ const { MONGODB, SECRET_KEY } = require('./config');
 
 const PORT = 4000;
 const app = express();
+
 const corsOptions = {
   origin: 'http://localhost:3000',
   credentials: true,
@@ -25,9 +27,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(SECRET_KEY));
 app.use(cors(corsOptions));
 
+// MONGODB SESSION STORE
+const store = new MongoDBStore(
+  {
+    uri: MONGODB,
+    collection: 'mySessions',
+  },
+  () => {
+    console.log('connected session');
+  },
+);
+
 app.use(
   session({
     secret: SECRET_KEY,
+    store,
     resave: true,
     saveUninitialized: true,
   }),

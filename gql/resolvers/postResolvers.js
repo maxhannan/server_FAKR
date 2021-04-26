@@ -53,6 +53,7 @@ module.exports = {
         photoURL,
         user: user.id,
         username: user.username,
+        userDisplayName: user.displayName,
         userPhoto: user.photos,
         createdAt: new Date().toISOString(),
       });
