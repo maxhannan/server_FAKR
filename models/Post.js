@@ -1,7 +1,12 @@
 const { model, Schema } = require('mongoose');
 
 const postSchema = new Schema({
+  postType: String,
+  title: String,
   body: String,
+  liveLink: String,
+  repoLink: String,
+  photoURL: String,
   username: String,
   userPhoto: String,
   createdAt: String,

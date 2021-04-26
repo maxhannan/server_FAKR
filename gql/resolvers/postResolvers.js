@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 const { AuthenticationError, UserInputError } = require('apollo-server-errors');
 const Post = require('../../models/Post');
 
@@ -6,6 +7,14 @@ module.exports = {
     async getPosts() {
       try {
         const posts = await Post.find().sort({ createdAt: -1 });
+        return posts;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+    async getPostsByUser(_, { username }) {
+      try {
+        const posts = await Post.find({ username }).sort({ createdAt: -1 });
         return posts;
       } catch (err) {
         throw new Error(err);
@@ -24,7 +33,11 @@ module.exports = {
     },
   },
   Mutation: {
-    async createPost(_, { body }, context) {
+    async createPost(
+      _,
+      { postType, title, body, liveLink, repoLink, photoURL },
+      context,
+    ) {
       const { user } = context;
 
       if (body.trim() === '') {
@@ -32,7 +45,12 @@ module.exports = {
       }
 
       const newPost = new Post({
+        postType,
+        title,
         body,
+        liveLink,
+        repoLink,
+        photoURL,
         user: user.id,
         username: user.username,
         userPhoto: user.photos,
