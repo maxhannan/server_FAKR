@@ -79,7 +79,7 @@ const server = new ApolloServer({
   },
 });
 
-server.applyMiddleware({ app, cors: corsOptions });
+server.applyMiddleware({ app, cors: false });
 
 const startServer = async () => {
   await mongoose.connect(MONGODB, {
