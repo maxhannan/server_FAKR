@@ -9,6 +9,7 @@ const postSchema = new Schema({
   photoURL: String,
   username: String,
   userPhoto: String,
+  userDisplayName: String,
   createdAt: String,
   likes: [
     {

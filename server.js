@@ -41,6 +41,12 @@ const store = new MongoDBStore(
 app.use(
   session({
     secret: SECRET_KEY,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: false,
+    },
     store,
     resave: true,
     saveUninitialized: true,
