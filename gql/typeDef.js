@@ -22,6 +22,7 @@ module.exports = gql`
     id: ID!
     createdAt: String!
     username: String!
+    userPhoto: String!
   }
   type Comment {
     id: ID!

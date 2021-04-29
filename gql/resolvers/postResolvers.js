@@ -76,7 +76,7 @@ module.exports = {
       }
     },
     async likePost(_, { postId }, context) {
-      const { username } = context.user;
+      const { username, photos } = context.user;
 
       const post = await Post.findById(postId);
       if (post) {
@@ -87,6 +87,7 @@ module.exports = {
           // Not liked, like post
           post.likes.push({
             username,
+            userPhoto: photos,
             createdAt: new Date().toISOString(),
           });
         }

@@ -14,6 +14,7 @@ const postSchema = new Schema({
   likes: [
     {
       username: String,
+      userPhoto: String,
       createdAt: String,
     },
   ],
