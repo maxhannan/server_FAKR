@@ -29,6 +29,7 @@ module.exports = gql`
     createdAt: String!
     username: String!
     body: String!
+    userPhoto: String!
   }
   type User {
     id: ID!
