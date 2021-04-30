@@ -14,7 +14,7 @@ const typeDefs = require('./gql/typeDef');
 const resolvers = require('./gql/resolvers');
 const { MONGODB, SECRET_KEY } = require('./config');
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 const app = express();
 
 const corsOptions = {
