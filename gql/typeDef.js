@@ -39,6 +39,7 @@ module.exports = gql`
   }
   type Query {
     getCurrentUser: User!
+    getUserByName(username: String!): User!
     getPosts: [Post]
     getPostsByUser(username: String!): [Post]
     getPost(postId: ID!): Post

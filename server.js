@@ -37,15 +37,15 @@ const store = new MongoDBStore(
     console.log('connected session');
   },
 );
-
+app.set('trust proxy', 1);
 app.use(
   session({
     secret: SECRET_KEY,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
       httpOnly: true,
-      sameSite: 'lax',
-      secure: false,
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // must be 'none' to enable cross-site delivery
+      secure: process.env.NODE_ENV === 'production', // must be true if sameSite='none'
     },
     store,
     resave: true,
