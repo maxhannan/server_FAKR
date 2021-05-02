@@ -49,7 +49,7 @@ module.exports = {
         }
         await followingUser.save();
         await targetUser.save();
-        return targetUser;
+        return followingUser;
       }
       throw new UserInputError('User not found');
     },
