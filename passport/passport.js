@@ -47,7 +47,6 @@ passport.use(
       callbackURL: 'http://localhost:4000/auth/twitter/callback',
     },
     (accessToken, refreshToken, profile, cb) => {
-      console.log(profile);
       User.findOne({ twitterID: profile.id }, async (err, doc) => {
         if (err) {
           return cb(err, null);
@@ -76,7 +75,6 @@ passport.use(
       callbackURL: 'http://localhost:4000/auth/github/callback',
     },
     (accessToken, refreshToken, profile, cb) => {
-      console.log(profile);
       User.findOne({ githubID: profile.id }, async (err, doc) => {
         if (err) {
           return cb(err, null);

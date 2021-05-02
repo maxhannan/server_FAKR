@@ -36,6 +36,8 @@ module.exports = gql`
     displayName: String
     photos: String
     username: String!
+    followers: [User]
+    following: [User]
   }
   type Query {
     getCurrentUser: User!
@@ -54,6 +56,7 @@ module.exports = gql`
       repoLink: String!
       photoURL: String!
     ): Post!
+    followUser(username: String!): User!
     deletePost(postId: ID!): String!
     likePost(postId: ID!): Post!
     createComment(postId: ID!, body: String!): Post!

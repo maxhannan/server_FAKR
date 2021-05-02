@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-server-core": "^2.24.0",
     "apollo-server-errors": "^2.5.0",
     "apollo-server-express": "^2.23.0",
     "aws-sdk": "^2.892.0",

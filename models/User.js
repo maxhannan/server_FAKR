@@ -25,6 +25,20 @@ const UserSchema = new mongoose.Schema({
     required: false,
     type: String,
   },
+  followers: [
+    {
+      displayName: String,
+      photos: String,
+      username: String,
+    },
+  ],
+  following: [
+    {
+      displayName: String,
+      photos: String,
+      username: String,
+    },
+  ],
 });
 
 module.exports = mongoose.model('User', UserSchema);
