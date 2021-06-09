@@ -6,6 +6,8 @@ module.exports = {
     getCurrentUser: async (_, args, context) => context.user,
     getUserByName: async (_, { username }) => {
       try {
+        console.log('POLL');
+        console.log(username);
         const user = await User.findOne({ username });
         if (user) {
           return user;
